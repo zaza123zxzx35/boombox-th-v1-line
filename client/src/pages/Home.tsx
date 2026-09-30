@@ -29,6 +29,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { ProductConfigurator } from "@/components/ProductConfigurator";
 import { CHAT_URL, formatFlavorSelections, formatPrice, LINE_URL, navItems, packages, refills, brandSlides, CartItem, ColorOption, Product } from "@/data/catalog";
 import { calculatePromotion } from "@/lib/cart";
+import { getPackages, getRefills, getFlavors } from "@/data/sheets";
 import { trpc } from "@/lib/trpc";
 
 function scrollToId(id: string) { document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }
