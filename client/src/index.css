@@ -806,3 +806,47 @@ input[type="range"] { width: 100%; margin-top: 15px; accent-color: var(--lime); 
 .asset-picker-card img { display: block; width: 100%; height: 96px; object-fit: cover; }
 .asset-picker-card span { display: flex; align-items: center; gap: 3px; overflow: hidden; padding: 7px; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
 @media (max-width: 640px) { .admin-products-toolbar { align-items: flex-start; flex-direction: column; } .admin-products-toolbar > div { align-items: flex-start; flex-wrap: wrap; } .admin-products-toolbar span { flex-basis: 100%; margin-left: 27px; } .admin-product-top { align-items: flex-start; } .admin-product-image { flex-basis: 72px; width: 72px; height: 58px; } .admin-product-identity h2 { font-size: 15px; } .admin-product-description { white-space: normal; } .admin-edit-button { padding: 7px 8px; } .admin-product-form { margin-left: 0; } .admin-form-grid { grid-template-columns: 1fr 1fr; } .admin-form-grid label:last-child { grid-column: 1 / -1; } .admin-image-row { align-items: flex-start; flex-direction: column; } .asset-picker-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Color swatch - bigger */
+.color-swatch {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+.color-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.color-option.selected {
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.08);
+}
+.color-option:hover {
+  background: rgba(255,255,255,0.06);
+}
+.color-option-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.color-option-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.color-option-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
