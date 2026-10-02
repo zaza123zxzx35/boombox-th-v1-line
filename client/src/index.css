@@ -554,6 +554,43 @@ input[type="range"] { width: 100%; margin-top: 15px; accent-color: var(--lime); 
 .product-photo { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .sticky-cart-bar span b { color: var(--lime); font-weight: 700; }
 
+.free-shipping-meter { margin: 10px 0 8px; padding: 9px 10px; border: 1px solid rgba(217,255,82,.16); border-radius: 9px; background: rgba(217,255,82,.045); }
+.free-shipping-meter.is-complete { border-color: rgba(114,227,142,.35); background: rgba(114,227,142,.07); }
+.free-shipping-copy { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #b8c6b2; font-size: 10px; }
+.free-shipping-copy b { color: var(--lime); font-family: 'Space Grotesk', sans-serif; font-size: 10px; white-space: nowrap; }
+.free-shipping-meter.is-complete .free-shipping-copy span, .free-shipping-meter.is-complete .free-shipping-copy b { color: #8ff5af; }
+.free-shipping-track { height: 5px; margin-top: 7px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.1); }
+.free-shipping-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #b8e73e, #d9ff52); transition: width 240ms ease; }
+.cart-recommendations { margin: 0 20px; padding: 13px 0 12px; border-top: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07); }
+.cart-recommendations-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.cart-recommendations-heading strong { color: #e9f3e2; font-size: 11px; }
+.cart-recommendations-heading span { color: #829281; font-size: 9px; }
+.cart-recommendation-list { display: grid; gap: 7px; margin-top: 9px; }
+.cart-recommendation { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: 8px; }
+.cart-recommendation .product-art { width: 40px; height: 40px; min-height: 40px; flex-basis: 40px; }
+.cart-recommendation strong, .cart-recommendation small { display: block; }
+.cart-recommendation strong { color: #dce8d7; font-size: 10px; }
+.cart-recommendation small { margin-top: 3px; color: #829281; font-size: 9px; }
+.cart-recommendation button { min-width: 45px; padding: 6px 8px; border: 1px solid rgba(217,255,82,.45); border-radius: 6px; background: rgba(217,255,82,.08); color: var(--lime); font: inherit; font-size: 10px; cursor: pointer; }
+.cart-recommendation button:hover { background: var(--lime); color: var(--void); }
+.catalog-intro-actions { display: grid; justify-items: end; gap: 10px; }
+.quiz-trigger { display: inline-flex; align-items: center; gap: 6px; padding: 9px 11px; border: 1px solid rgba(217,255,82,.35); border-radius: 8px; background: rgba(217,255,82,.06); color: var(--lime); font: inherit; font-size: 10px; cursor: pointer; }
+.quiz-trigger:hover { border-color: var(--lime); background: rgba(217,255,82,.13); }
+.pack-quiz-overlay { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 20px; background: rgba(2,5,3,.82); backdrop-filter: blur(10px); }
+.pack-quiz-modal { position: relative; width: min(520px, 100%); padding: 28px; border: 1px solid rgba(217,255,82,.22); border-radius: 18px; background: #0d150e; box-shadow: 0 24px 90px rgba(0,0,0,.55); }
+.pack-quiz-close { position: absolute; top: 14px; right: 14px; }
+.pack-quiz-modal h2 { margin-top: 8px; color: #f3f8ed; font-family: 'Space Grotesk', sans-serif; font-size: clamp(25px, 5vw, 34px); letter-spacing: -.06em; }
+.pack-quiz-modal > p { margin-top: 8px; color: #9cac98; font-size: 11px; line-height: 1.5; }
+.pack-quiz-options { display: grid; gap: 9px; margin-top: 20px; }
+.pack-quiz-options button { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: center; gap: 10px; width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,.1); border-radius: 10px; background: rgba(255,255,255,.03); color: #deead8; text-align: left; cursor: pointer; transition: 160ms ease; }
+.pack-quiz-options button:hover { border-color: rgba(217,255,82,.55); background: rgba(217,255,82,.09); transform: translateY(-1px); }
+.pack-quiz-options button > b { display: grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; background: var(--lime); color: var(--void); font-family: 'Space Grotesk', sans-serif; font-size: 11px; }
+.pack-quiz-options strong, .pack-quiz-options small { display: block; }
+.pack-quiz-options strong { font-size: 12px; }
+.pack-quiz-options small { margin-top: 3px; color: #8fa08b; font-size: 10px; }
+.pack-quiz-options svg { color: var(--lime); }
+@media (max-width: 640px) { .free-shipping-meter { margin-right: 0; margin-left: 0; } .cart-recommendations { margin: 0 16px; } .catalog-intro-actions { display: block; margin-top: 15px; } .quiz-trigger { width: 100%; justify-content: center; } .pack-quiz-modal { padding: 24px 18px 18px; } }
+
 /* A single reliable scroll surface for the cart on touch devices. */
 @media (max-width: 640px) {
   .cart-drawer { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; }

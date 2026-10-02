@@ -34,6 +34,11 @@ export type Flavor = {
   popular?: boolean;
 };
 
+export function beadCountOf(product: Pick<Product, "quantity">): number {
+  const match = product.quantity.match(/([\d,]+)\s*beads/i);
+  return match ? Number(match[1].replace(/,/g, "")) : 0;
+}
+
 export const LINE_URL = "https://line.me/R/ti/p/@425syacj";
 export const CHAT_URL = LINE_URL;
 

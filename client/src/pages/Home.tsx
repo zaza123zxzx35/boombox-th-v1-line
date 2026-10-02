@@ -27,7 +27,7 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { FlavorBoard } from "@/components/FlavorBoard";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductConfigurator } from "@/components/ProductConfigurator";
-import { CHAT_URL, formatFlavorSelections, formatPrice, LINE_URL, navItems, packages, refills, brandSlides, CartItem, ColorOption, Product } from "@/data/catalog";
+import { beadCountOf, CHAT_URL, formatFlavorSelections, formatPrice, LINE_URL, navItems, packages, refills, brandSlides, CartItem, ColorOption, Product } from "@/data/catalog";
 import { calculatePromotion } from "@/lib/cart";
 import { useSheets } from "@/data/sheets";
 import { trpc } from "@/lib/trpc";
@@ -64,6 +64,7 @@ export default function Home() {
   const [orderNote, setOrderNote] = useState(() => localStorage.getItem("boombox-order-note") ?? "");
   const [activeBrandSlide, setActiveBrandSlide] = useState(0);
   const [lightboxSlide, setLightboxSlide] = useState<number | null>(null);
+  const [packQuizOpen, setPackQuizOpen] = useState(false);
   const catalogQuery = trpc.catalog.list.useQuery();
 
   useEffect(() => {
@@ -103,6 +104,8 @@ export default function Home() {
 
   const cartCount = cart.reduce((total, item) => total + item.count, 0);
   const { subtotal, refillCount, freeBeads, giftItems, beadPromoLabel, promoLabel, effectiveDiscount, cartTotal } = calculatePromotion(cart, promoApplied, discount);
+  const freeShippingThreshold = 200;
+  const refillBeads = cart.reduce((total, item) => total + (item.kind === "refill" ? beadCountOf(item) * item.count : 0), 0);
   const oldCost = packPrice * packsPerMonth;
   const newCost = packsPerMonth * 60 + 119;
   const monthlySave = Math.max(0, oldCost - newCost);
@@ -116,6 +119,15 @@ export default function Home() {
   };
   const livePackages = useMemo(() => catalogQuery.isSuccess && catalogQuery.data?.length ? packages.filter((product) => liveProductMap.has(product.id)).map(mergeLiveProduct) : packages, [catalogQuery.data, catalogQuery.isSuccess, liveProductMap]);
   const liveRefills = useMemo(() => catalogQuery.isSuccess && catalogQuery.data?.length ? refills.filter((product) => liveProductMap.has(product.id)).map(mergeLiveProduct) : refills, [catalogQuery.data, catalogQuery.isSuccess, liveProductMap]);
+  const quizOptions = [
+    { id: "starter", title: "เพิ่งเริ่มลอง", description: "อยากลองแบบง่าย ๆ ราคาเข้าถึงง่าย", product: livePackages.find((item) => item.id === "starter") },
+    { id: "daily", title: "อยากคุ้มและเลือกกลิ่นเอง", description: "เหมาะกับใช้ทุกวันและเลือกได้ 2 กลิ่น", product: livePackages.find((item) => item.id === "daily") },
+    { id: "duo", title: "อยากจัดเต็ม", description: "เม็ดเยอะขึ้น เหมาะกับคนที่ใช้บ่อย", product: livePackages.find((item) => item.id === "duo") },
+  ].filter((option): option is { id: string; title: string; description: string; product: Product } => Boolean(option.product));
+  const recommendedProducts = useMemo(() => {
+    const priority = ["refill-200", "refill-100", "refill-500"];
+    return priority.map((id) => liveRefills.find((product) => product.id === id)).filter((product): product is Product => Boolean(product)).filter((product) => !cart.some((item) => item.id === product.id)).slice(0, 2);
+  }, [cart, liveRefills]);
 
   function addToCart(product: Product, options?: { color?: ColorOption; flavors?: string[] }) {
     const cartKey = `${product.id}:${options?.color?.id ?? "default"}:${(options?.flavors ?? []).join("|")}`;
@@ -147,6 +159,10 @@ export default function Home() {
       return;
     }
     addToCart(product);
+  }
+  function handleRecommendedAdd(product: Product) {
+    setCartOpen(false);
+    handleProductAdd(product);
   }
   function editCartItem(item: CartItem) {
     setCartOpen(false);
@@ -326,7 +342,7 @@ export default function Home() {
             <p className="section-kicker">BOOMBOX TH</p>
             <h2>เลือกสินค้า<br /><em>ที่ต้องการ</em></h2>
           </div>
-          <p className="section-intro-copy">กด “เพิ่มลงถุง” แล้วเลือกสีหรือกลิ่นได้ในขั้นตอนถัดไป</p>
+          <div className="catalog-intro-actions"><p className="section-intro-copy">กด “เพิ่มลงถุง” แล้วเลือกสีหรือกลิ่นได้ในขั้นตอนถัดไป</p><button className="quiz-trigger" type="button" onClick={() => setPackQuizOpen(true)}><CircleHelp size={15} /> ไม่รู้จะเริ่มแพ็กไหน?</button></div>
         </section>
 
         <section className="section-wrap discovery-tools">
@@ -360,15 +376,17 @@ export default function Home() {
         </section>
       </main>
 
+      {packQuizOpen && <div className="pack-quiz-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setPackQuizOpen(false); }}><section className="pack-quiz-modal" role="dialog" aria-modal="true" aria-labelledby="pack-quiz-title"><button className="icon-button pack-quiz-close" type="button" aria-label="ปิดตัวช่วยเลือกแพ็ก" onClick={() => setPackQuizOpen(false)}><X size={18} /></button><span className="section-kicker">เริ่มต้นใน 10 วินาที</span><h2 id="pack-quiz-title">เลือกแพ็กที่เหมาะกับคุณ</h2><p>เลือกคำตอบที่ใกล้คุณที่สุด แล้วเราจะพาไปตั้งค่าสินค้าให้ต่อทันที</p><div className="pack-quiz-options">{quizOptions.map((option, index) => <button key={option.id} type="button" onClick={() => { setPackQuizOpen(false); handleProductAdd(option.product); }}><b>{index + 1}</b><span><strong>{option.title}</strong><small>{option.description}</small></span><ArrowUpRight size={16} /></button>)}</div></section></div>}
+
       <footer className="site-footer"><div className="footer-top"><div className="brand-lockup footer-brand"><span className="brand-gem">✦</span><span><strong>BoomBox</strong><small>TH / CATALOG 02</small></span></div><div className="footer-note">A better signal<br /><em>for every day.</em></div></div><div className="footer-bottom"><span>© 2026 BOOMBOX TH</span><span>NICOTINE-FREE FLAVOR BEADS / NOT A TOBACCO PRODUCT</span><button type="button" onClick={() => scrollToId("top")} aria-label="กลับขึ้นด้านบน"><ArrowUp size={14} /> TOP</button></div></footer>
 
-      {cartCount > 0 && <button className="sticky-cart-bar" type="button" onClick={() => setCartOpen(true)}><span><ShoppingBag size={16} /> ดูรายการที่เลือก <b>({cartCount})</b></span><strong className={cartPulse > 0 ? `sticky-cart-total cart-total-highlight-${cartPulse % 2}` : "sticky-cart-total"}>฿{formatPrice(cartTotal)} <ArrowUpRight size={15} /></strong></button>}
+      {cartCount > 0 && <button className="sticky-cart-bar" type="button" onClick={() => setCartOpen(true)}><span><ShoppingBag size={16} /> ตรวจสอบออเดอร์ <b>({cartCount})</b></span><strong className={cartPulse > 0 ? `sticky-cart-total cart-total-highlight-${cartPulse % 2}` : "sticky-cart-total"}>฿{formatPrice(cartTotal)} <ArrowUpRight size={15} /></strong></button>}
       {!cartOpen && <a className="floating-chat" href={CHAT_URL} target="_blank" rel="noreferrer" aria-label="คุยกับร้านทาง LINE"><MessageCircle size={17} /><span>คุยกับร้าน</span></a>}
       {showScrollTop && <button className="floating-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="กลับขึ้นด้านบน"><ArrowUp size={18} /></button>}
 
       {configProduct && <ProductConfigurator product={configProduct} open={Boolean(configProduct)} selectedColor={selectedColor} selectedFlavors={selectedFlavors} onColorChange={setSelectedColor} onFlavorToggle={toggleFlavor} onFlavorRemove={removeOneFlavor} onClose={() => { setEditingCartKey(null); setConfigProduct(null); }} onConfirm={confirmConfiguredProduct} />}
 
-      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} cart={cart} giftItems={giftItems} cartCount={cartCount} cartTotal={cartTotal} discount={effectiveDiscount} promoLabel={promoLabel} promoInput={promoInput} onPromoInputChange={setPromoInput} onApplyPromo={applyPromo} orderNote={orderNote} onOrderNoteChange={setOrderNote} copied={copied} onCopyOrder={copyOrder} orderPreview={getOrderText()} onLineOrder={handleLineOrder} onUpdateCount={updateCount} onEdit={editCartItem} onRemove={removeFromCart} onBrowse={() => scrollToId("packages")} />
+      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} cart={cart} giftItems={giftItems} cartCount={cartCount} cartTotal={cartTotal} refillBeads={refillBeads} freeShippingThreshold={freeShippingThreshold} recommendedProducts={recommendedProducts} onRecommendedAdd={handleRecommendedAdd} discount={effectiveDiscount} promoLabel={promoLabel} promoInput={promoInput} onPromoInputChange={setPromoInput} onApplyPromo={applyPromo} orderNote={orderNote} onOrderNoteChange={setOrderNote} copied={copied} onCopyOrder={copyOrder} orderPreview={getOrderText()} onLineOrder={handleLineOrder} onUpdateCount={updateCount} onEdit={editCartItem} onRemove={removeFromCart} onBrowse={() => scrollToId("packages")} />
     </div>
   );
 }

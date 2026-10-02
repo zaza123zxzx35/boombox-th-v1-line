@@ -1,6 +1,6 @@
 import { Drawer } from "vaul";
 import { ArrowUp, ArrowUpRight, Check, CircleHelp, Clipboard, Gift, Minus, Pencil, Plus, ShoppingBag, Trash2, X } from "lucide-react";
-import { formatPrice, groupFlavorSelections, CartItem } from "@/data/catalog";
+import { formatPrice, groupFlavorSelections, CartItem, Product } from "@/data/catalog";
 import { GiftItem } from "@/lib/cart";
 import { ProductArt } from "@/components/ProductCard";
 import { useEffect, useRef, useState } from "react";
@@ -12,6 +12,10 @@ type Props = {
   giftItems: GiftItem[];
   cartCount: number;
   cartTotal: number;
+  refillBeads: number;
+  freeShippingThreshold: number;
+  recommendedProducts: Product[];
+  onRecommendedAdd: (product: Product) => void;
   discount: number;
   promoLabel: string;
   promoInput: string;
@@ -29,7 +33,7 @@ type Props = {
   onBrowse: () => void;
 };
 
-export function CartDrawer({ open, onOpenChange, cart, giftItems, cartCount, cartTotal, discount, promoLabel, promoInput, onPromoInputChange, onApplyPromo, orderNote, onOrderNoteChange, copied, onCopyOrder, orderPreview, onLineOrder, onUpdateCount, onEdit, onRemove, onBrowse }: Props) {
+export function CartDrawer({ open, onOpenChange, cart, giftItems, cartCount, cartTotal, refillBeads, freeShippingThreshold, recommendedProducts, onRecommendedAdd, discount, promoLabel, promoInput, onPromoInputChange, onApplyPromo, orderNote, onOrderNoteChange, copied, onCopyOrder, orderPreview, onLineOrder, onUpdateCount, onEdit, onRemove, onBrowse }: Props) {
   const [linePreviewOpen, setLinePreviewOpen] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
   const [guideSeen, setGuideSeen] = useState(() => localStorage.getItem("boombox-order-guide-seen") === "1");
@@ -55,6 +59,7 @@ export function CartDrawer({ open, onOpenChange, cart, giftItems, cartCount, car
         {cart.length ? <>
           <div className="drawer-quick-actions">
             <div className="drawer-quick-total"><span>ยอดที่ต้องชำระ</span><strong>฿{formatPrice(cartTotal)}</strong></div>
+            <div className={`free-shipping-meter${refillBeads >= freeShippingThreshold ? " is-complete" : ""}`}><div className="free-shipping-copy"><span>{refillBeads >= freeShippingThreshold ? "ส่งฟรีแล้ว · รีฟิลครบ 200 เม็ด" : `เพิ่มรีฟิลอีก ${freeShippingThreshold - refillBeads} เม็ด รับส่งฟรี`}</span><b>{refillBeads}/{freeShippingThreshold} เม็ด</b></div><div className="free-shipping-track"><span style={{ width: `${Math.min(100, Math.round((refillBeads / freeShippingThreshold) * 100))}%` }} /></div></div>
             <div className="drawer-quick-buttons"><button className={`copy-button${copied ? " is-copied" : ""}`} type="button" onClick={onCopyOrder}>{copied ? <Check size={15} /> : <Clipboard size={15} />} {copied ? "ขั้นที่ 1 เสร็จแล้ว ✓" : "1. คัดลอกออเดอร์"}</button><button className="primary-button full" type="button" onClick={() => setLinePreviewOpen(true)}>2. ตรวจสอบและเปิด LINE <ArrowUpRight size={16} /></button></div>
             <p className="drawer-quick-hint">กด 1 เพื่อคัดลอก → กด 2 ตรวจสอบรายการ → วางข้อความในแชท LINE แล้วส่ง</p>
             {showScrollTop && <button className="drawer-scroll-top" type="button" onClick={() => scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" })}><ArrowUp size={14} /> กลับไปดูยอดรวม</button>}
@@ -72,12 +77,13 @@ export function CartDrawer({ open, onOpenChange, cart, giftItems, cartCount, car
             })}
             {giftItems.map((gift) => <div className="drawer-item gift-item" key={gift.id}><div className="gift-icon"><Gift size={22} /></div><div className="drawer-item-copy"><span>🎁 ของแถมจากโปรโมชั่น</span><strong>{gift.name}</strong><small>{gift.quantity}</small><small>{gift.reason} · ราคา ฿0</small></div></div>)}
           </div>
+          {recommendedProducts.length > 0 && <section className="cart-recommendations" aria-label="สินค้าแนะนำเพื่อเพิ่มในตะกร้า"><div className="cart-recommendations-heading"><strong>เพิ่มให้คุ้มขึ้น</strong><span>รีฟิลที่ลูกค้ามักเลือกเพิ่ม</span></div><div className="cart-recommendation-list">{recommendedProducts.map((product) => <div className="cart-recommendation" key={product.id}><ProductArt accent={product.accent} image={product.image} compact /><div><strong>{product.name}</strong><small>{product.quantity} · ฿{formatPrice(product.price)}</small></div><button type="button" onClick={() => onRecommendedAdd(product)}>เพิ่ม</button></div>)}</div></section>}
           <div className="drawer-summary">
             <div><span>{discount ? "ยอดสุทธิ" : "ยอดรวม"}</span><strong>฿{formatPrice(cartTotal)}</strong></div>
             {promoLabel && <p className="promo-success">{promoLabel}{giftItems.length > 0 && <><br /><small>รายการของแถมแสดงแยกด้านบนแล้ว</small></>}</p>}
             <div className="promo-box"><span>🎫 มีโค้ดส่วนลด?</span><div><input value={promoInput} onChange={(event) => onPromoInputChange(event.target.value)} placeholder="กรอกโค้ด..." aria-label="กรอกโค้ดส่วนลด" /><button type="button" onClick={onApplyPromo}>ใช้โค้ด</button></div></div>
             <label className="order-note-box"><span>📝 หมายเหตุสำหรับออเดอร์</span><textarea value={orderNote} onChange={(event) => onOrderNoteChange(event.target.value)} placeholder="เช่น ขอจัดส่งช่วงบ่าย หรือฝากแจ้งก่อนส่ง" maxLength={240} aria-label="หมายเหตุสำหรับออเดอร์" /><small>{orderNote.length}/240</small></label>
-            <p>จัดส่งฟรีเมื่อครบ ฿999 · ยืนยันที่อยู่กับร้านใน LINE</p>
+            <p>ส่งฟรีเมื่อมีรีฟิลรวมอย่างน้อย 200 เม็ด · ยืนยันที่อยู่กับร้านใน LINE</p>
           </div>
           </div>
         </> : <div className="drawer-empty"><div className="empty-bag"><ShoppingBag size={28} /></div><strong>เริ่มเลือก mood ของคุณ</strong><span>เพิ่มแพ็กเกจหรือรีฟิลที่อยากลอง แล้วกลับมาดูรายการที่นี่</span><Drawer.Close asChild><button className="primary-button" type="button" onClick={onBrowse}>ดูแพ็กเกจ</button></Drawer.Close></div>}
