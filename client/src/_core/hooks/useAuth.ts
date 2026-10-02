@@ -1,17 +1,14 @@
-import { useState, useEffect } from "react";
+import { trpc } from "@/lib/trpc";
 
 export function useAuth() {
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<{ id: string; name: string; email: string } | null>(null);
+  const userQuery = trpc.auth.me.useQuery(undefined, { retry: false, staleTime: 60_000 });
+  const logoutMutation = trpc.auth.logout.useMutation({
+    onSuccess: () => void userQuery.refetch(),
+  });
 
-  useEffect(() => {
-    setLoading(false);
-    setUser(null);
-  }, []);
-
-  const logout = () => {
-    setUser(null);
+  return {
+    user: userQuery.data ?? null,
+    loading: userQuery.isLoading,
+    logout: () => logoutMutation.mutate(),
   };
-
-  return { user, loading, logout };
 }

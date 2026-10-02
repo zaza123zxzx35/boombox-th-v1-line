@@ -29,7 +29,6 @@ import { ProductCard } from "@/components/ProductCard";
 import { ProductConfigurator } from "@/components/ProductConfigurator";
 import { beadCountOf, CHAT_URL, formatFlavorSelections, formatPrice, LINE_URL, navItems, packages, refills, brandSlides, CartItem, ColorOption, Product } from "@/data/catalog";
 import { calculatePromotion } from "@/lib/cart";
-import { useSheets } from "@/data/sheets";
 import { trpc } from "@/lib/trpc";
 
 function scrollToId(id: string) { document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }
@@ -111,7 +110,7 @@ export default function Home() {
   const monthlySave = Math.max(0, oldCost - newCost);
   const yearlySave = monthlySave * 12;
 
-  const liveProductMap = useMemo(() => new Map((catalogQuery.data ?? []).map(({ product, assetUrl }) => [product.catalogId, { product, assetUrl }])), [catalogQuery.data]);
+  const liveProductMap = useMemo(() => new Map((catalogQuery.data ?? []).map(({ product, assetUrl, colorImages }) => [product.catalogId, { product, assetUrl, colorImages }])), [catalogQuery.data]);
   const mergeLiveProduct = (product: Product): Product => {
     const record = liveProductMap.get(product.id);
     if (!record) return product;

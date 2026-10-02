@@ -50,6 +50,10 @@ export default function AdminProducts() {
 
   function saveProduct(catalogId: string) {
     if (!draft) return;
+    if (!draft.name.trim() || !draft.description.trim()) {
+      toast.error("กรุณากรอกข้อมูลสินค้าให้ครบ", { description: "ชื่อสินค้าและรายละเอียดต้องไม่เว้นว่าง" });
+      return;
+    }
     const price = Number(draft.price);
     const stock = Number(draft.stock);
     const compareAt = draft.compareAt.trim() ? Number(draft.compareAt) : null;
