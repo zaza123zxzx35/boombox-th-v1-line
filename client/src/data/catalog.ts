@@ -46,8 +46,8 @@ export const packages: Product[] = [
 
 export const refills: Product[] = [
   { id: "refill-100", kind: "refill", name: "REFILL 100", eyebrow: "SINGLE TUBE", description: "100 เม็ด เลือกกลิ่นได้ตามสไตล์คุณ", price: 69, quantity: "100 beads", badge: "ยอดฮิต", accent: "lime", image: "/images/refill-100.jpg", popular: true, canChooseFlavor: true, maxFlavors: 1 },
-  { id: "refill-200", kind: "refill", name: "REFILL 200", eyebrow: "DUO FLAVOR", description: "2 กลิ่น × 100 เม็ด สลับ mood ได้ทั้งวัน", price: 119, quantity: "200 beads", badge: "แนะนำ", accent: "violet", image: "/images/set-b.jpg", popular: true, canChooseFlavor: true, maxFlavors: 2 },
-  { id: "refill-500", kind: "refill", name: "REFILL 500", eyebrow: "THE STOCK", description: "5 กลิ่น × 100 เม็ด สำหรับสายสะสม", price: 249, quantity: "500 beads", badge: "คุ้มสุด", accent: "amber", image: "/images/set-d.jpg", canChooseFlavor: true, maxFlavors: 5 },
+  { id: "refill-200", kind: "refill", name: "REFILL 200", eyebrow: "DUO FLAVOR", description: "2 กลิ่น × 100 เม็ด สลับ mood ได้ทั้งวัน", price: 119, quantity: "200 beads", badge: "แนะนำ", accent: "violet", image: "/images/refill-200.jpg", popular: true, canChooseFlavor: true, maxFlavors: 2 },
+  { id: "refill-500", kind: "refill", name: "REFILL 500", eyebrow: "THE STOCK", description: "5 กลิ่น × 100 เม็ด สำหรับสายสะสม", price: 249, quantity: "500 beads", badge: "คุ้มสุด", accent: "amber", image: "/images/refill-500.jpg", canChooseFlavor: true, maxFlavors: 5 },
   { id: "refill-1000", kind: "refill", name: "FLAVOR ARCHIVE", eyebrow: "MIX & MATCH", description: "รวมรสที่ใช่ไว้ให้คุณเลือกได้ทุกช่วงเวลา", price: 399, quantity: "1,000 beads", badge: "เหมาแบบโปร", accent: "ice", image: "/images/refill-1000.jpg", canChooseFlavor: true, maxFlavors: 10 },
 ];
 

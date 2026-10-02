@@ -230,7 +230,7 @@ export default function Home() {
   async function handleLineOrder() {
     const copiedSuccessfully = await copyOrder();
     if (!copiedSuccessfully) return;
-    toast("วางข้อความในแชท LINE ได้เลย", { duration: 3600 });
+    toast.success("คัดลอกออเดอร์แล้ว", { description: "กำลังเปิด LINE — กดวางข้อความในแชทของร้านก่อนส่ง", duration: 5000 });
     window.open(LINE_URL, "_blank", "noopener,noreferrer");
   }
   function getOrderText() {
@@ -360,10 +360,10 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="site-footer"><div className="footer-top"><div className="brand-lockup footer-brand"><span className="brand-gem">✦</span><span><strong>BoomBox</strong><small>TH / CATALOG 02</small></span></div><div className="footer-note">A better signal<br /><em>for every day.</em></div><a className="line-button" href={LINE_URL} target="_blank" rel="noreferrer"><span className="line-dot">L</span> คุยกับเราใน LINE <ArrowUpRight size={15} /></a></div><div className="footer-bottom"><span>© 2026 BOOMBOX TH</span><span>NICOTINE-FREE FLAVOR BEADS / NOT A TOBACCO PRODUCT</span><button type="button" onClick={() => scrollToId("top")} aria-label="กลับขึ้นด้านบน"><ArrowUp size={14} /> TOP</button></div></footer>
+      <footer className="site-footer"><div className="footer-top"><div className="brand-lockup footer-brand"><span className="brand-gem">✦</span><span><strong>BoomBox</strong><small>TH / CATALOG 02</small></span></div><div className="footer-note">A better signal<br /><em>for every day.</em></div></div><div className="footer-bottom"><span>© 2026 BOOMBOX TH</span><span>NICOTINE-FREE FLAVOR BEADS / NOT A TOBACCO PRODUCT</span><button type="button" onClick={() => scrollToId("top")} aria-label="กลับขึ้นด้านบน"><ArrowUp size={14} /> TOP</button></div></footer>
 
       {cartCount > 0 && <button className="sticky-cart-bar" type="button" onClick={() => setCartOpen(true)}><span><ShoppingBag size={16} /> ดูรายการที่เลือก <b>({cartCount})</b></span><strong className={cartPulse > 0 ? `sticky-cart-total cart-total-highlight-${cartPulse % 2}` : "sticky-cart-total"}>฿{formatPrice(cartTotal)} <ArrowUpRight size={15} /></strong></button>}
-      {!cartOpen && <a className="floating-chat" href={CHAT_URL} target="_blank" rel="noreferrer" aria-label="กลับแชท LINE"><MessageCircle size={17} /><span>กลับแชท</span></a>}
+      {!cartOpen && <a className="floating-chat" href={CHAT_URL} target="_blank" rel="noreferrer" aria-label="คุยกับร้านทาง LINE"><MessageCircle size={17} /><span>คุยกับร้าน</span></a>}
       {showScrollTop && <button className="floating-top" type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="กลับขึ้นด้านบน"><ArrowUp size={18} /></button>}
 
       {configProduct && <ProductConfigurator product={configProduct} open={Boolean(configProduct)} selectedColor={selectedColor} selectedFlavors={selectedFlavors} onColorChange={setSelectedColor} onFlavorToggle={toggleFlavor} onFlavorRemove={removeOneFlavor} onClose={() => { setEditingCartKey(null); setConfigProduct(null); }} onConfirm={confirmConfiguredProduct} />}
