@@ -1079,6 +1079,17 @@ button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
 .add-button:hover, .copy-button:hover, .cart-recommendation button:hover, .promo-box button:hover { background: #3282b8; color: #fff; }
 .filter-row button { color: #e2f5ff; font-weight: 800; }
 .product-tag, .eyebrow, .meta-label, .heading-count { color: #c9ebff !important; font-weight: 700; }
+.site-shell { color: #fff; }
+.site-shell .hero-kicker, .site-shell .section-kicker, .site-shell .catalog-intro .section-kicker { color: #dff4ff !important; font-weight: 800; }
+.site-shell .hero-description, .site-shell .section-intro-copy, .site-shell .product-copy p, .site-shell .flavor-board-description, .site-shell .flavor-board-tagline { color: #e1f4ff !important; font-weight: 600; }
+.site-shell .product-copy h3, .site-shell .product-copy strong, .site-shell .price-line strong, .site-shell h1, .site-shell h2, .site-shell h3 { color: #fff !important; text-shadow: 0 1px 1px rgba(0,0,0,.22); }
+.site-shell .eyebrow, .site-shell .meta-label, .site-shell .heading-count, .site-shell .product-tag { color: #d5f0ff !important; font-weight: 800; }
+.site-shell .desktop-nav button, .site-shell .cart-trigger, .site-shell .text-button, .site-shell .floating-chat { color: #fff !important; font-weight: 700; }
+.site-shell .search-wrap input { color: #fff !important; font-weight: 600; }
+.site-shell .search-wrap input::placeholder { color: #d5f0ff !important; opacity: 1; }
+.site-shell .filter-row button, .site-shell .primary-button, .site-shell .add-button, .site-shell .copy-button, .site-shell .cart-recommendation button, .site-shell .promo-box button { color: #fff !important; font-weight: 800; text-shadow: 0 1px 1px rgba(0,0,0,.2); }
+.site-shell .product-card, .site-shell .cart-drawer, .site-shell .drawer-scroll { background: #1b262c; }
+.site-shell .drawer-quick-actions, .site-shell .drawer-summary, .site-shell .line-preview-text { background: #0f4c75; }
 @media (max-width: 640px) {
   .cart-drawer { display: flex !important; flex-direction: column; height: 100dvh; max-height: 100dvh; overflow: hidden !important; }
   .cart-drawer > .drawer-header, .cart-drawer > .drawer-quick-actions, .cart-drawer > .order-guide-trigger { flex: 0 0 auto; }
