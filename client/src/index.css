@@ -887,3 +887,85 @@ input[type="range"] { width: 100%; margin-top: 15px; accent-color: var(--lime); 
   gap: 8px;
   flex: 1;
 }
+
+/* 2026 storefront refresh: clearer, warmer and easier to scan. */
+:root {
+  --void: #f6f4ee; --ink: #152238; --panel: #ffffff; --panel-2: #f0eee7;
+  --line: rgba(21, 34, 56, 0.13); --muted: #687386; --soft: #253247;
+  --lime: #e35f3e; --lime-deep: #bd4228; --violet: #6558b8; --amber: #d99a2b; --ice: #287ea3;
+}
+body { background: var(--void); color: var(--soft); }
+.site-shell { background: radial-gradient(circle at 50% -12%, rgba(227,95,62,.10), transparent 30rem), var(--void); }
+.site-header { border-bottom-color: rgba(21,34,56,.12); background: rgba(246,244,238,.88); }
+.brand-gem { border-color: var(--lime); color: var(--lime); box-shadow: 0 0 22px rgba(227,95,62,.16); }
+.brand-lockup strong { color: var(--ink); }
+.brand-lockup small, .desktop-nav button, .cart-trigger { color: #566277; }
+.desktop-nav button:hover, .cart-trigger:hover { color: var(--lime); }
+.cart-trigger { border-color: rgba(227,95,62,.35); background: rgba(227,95,62,.08); color: var(--ink); }
+.cart-trigger b { background: var(--lime); color: #fff; }
+.mobile-catalog-status { border-bottom-color: var(--line); background: #fffdf9; color: #687386; }
+.catalog-intro h2, h2 { color: var(--ink); }
+.section-kicker, .heading-count { color: var(--lime); }
+.section-intro-copy, .hero-description, .product-copy p { color: #687386; }
+.discovery-tools { border-top-color: var(--line); border-bottom-color: var(--line); background: rgba(246,244,238,.94); }
+.search-wrap { border-color: var(--line); background: #fffdf9; color: #6c788a; }
+.search-wrap input { color: var(--ink); }
+.search-wrap input::placeholder { color: #8791a0; }
+.filter-row button { background: #ebe9e1; color: #667287; }
+.filter-row button:hover, .filter-row button.active { border-color: rgba(227,95,62,.38); background: rgba(227,95,62,.10); color: var(--lime-deep); }
+.product-grid, .refill-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.product-card { min-height: 410px; border-color: var(--line); border-radius: 18px; background: #fffdf9; box-shadow: 0 8px 25px rgba(21,34,56,.05); }
+.product-card:hover { border-color: rgba(227,95,62,.46); background: #fff; box-shadow: 0 14px 32px rgba(21,34,56,.10); }
+.eyebrow, .meta-label { color: #7c8797; }
+.product-tag { background: rgba(227,95,62,.10); color: var(--lime-deep); }
+.product-copy h3, .price-line strong { color: var(--ink); }
+.price-line del { color: #9ca4b0; }
+.add-button { border-color: rgba(227,95,62,.4); background: rgba(227,95,62,.08); color: var(--lime-deep); }
+.add-button:hover { background: var(--lime); color: #fff; }
+.primary-button { background: var(--lime); color: #fff; box-shadow: 0 8px 20px rgba(227,95,62,.14); }
+.primary-button:hover { background: #ef7656; box-shadow: 0 12px 28px rgba(227,95,62,.22); }
+.quiz-trigger { border-color: rgba(227,95,62,.35); background: rgba(227,95,62,.07); color: var(--lime-deep); }
+.sticky-cart-bar { border-color: rgba(227,95,62,.36); background: rgba(255,253,249,.94); color: var(--ink); box-shadow: 0 16px 40px rgba(21,34,56,.14); }
+.sticky-cart-bar svg, .sticky-cart-bar strong { color: var(--lime-deep); }
+.floating-top { background: #fff; color: var(--ink); }
+.cart-drawer { border-left-color: rgba(227,95,62,.22); background: #fffdf9; box-shadow: -20px 0 70px rgba(21,34,56,.20); }
+.drawer-header { border-bottom-color: var(--line); }
+.drawer-header h2 { color: var(--ink); }
+.drawer-header p, .drawer-item-copy small { color: #687386; }
+.drawer-scroll { background: #fffdf9; }
+.drawer-items { padding: 8px 20px 20px; }
+.drawer-item { border-bottom-color: var(--line); }
+.drawer-item-copy > span { color: var(--lime-deep); }
+.drawer-item-copy strong { color: var(--ink); }
+.drawer-quick-actions { border-bottom-color: rgba(227,95,62,.22); background: #fff7f1; box-shadow: 0 8px 20px rgba(21,34,56,.07); }
+.drawer-quick-total { color: #687386; }
+.drawer-quick-total strong, .free-shipping-copy b { color: var(--lime-deep); }
+.free-shipping-meter { border-color: rgba(227,95,62,.18); background: rgba(227,95,62,.05); }
+.free-shipping-track span { background: linear-gradient(90deg, #ef8b6f, #e35f3e); }
+.drawer-summary { border-top-color: var(--line); background: #f3f1ea; }
+.drawer-summary > div strong { color: var(--lime-deep); }
+.copy-button { border-color: rgba(227,95,62,.4); background: rgba(227,95,62,.08); color: var(--lime-deep); }
+.copy-button:hover { background: rgba(227,95,62,.15); color: var(--lime-deep); }
+.promo-box, .order-note-box { border-color: var(--line); background: rgba(255,255,255,.64); }
+.promo-box input, .order-note-box textarea { border-color: var(--line); background: #fff; color: var(--ink); }
+.promo-box button { border-color: rgba(227,95,62,.35); background: rgba(227,95,62,.08); color: var(--lime-deep); }
+.order-guide-trigger { border-color: rgba(227,95,62,.25); background: rgba(227,95,62,.06); color: var(--ink); }
+.order-guide-trigger > svg:first-child, .drawer-scroll-top { color: var(--lime-deep); }
+.drawer-flavor-chip { border-color: rgba(227,95,62,.28); background: rgba(227,95,62,.08); color: var(--ink); }
+.drawer-flavor-chip b { color: var(--lime-deep); }
+.drawer-flavor-chip i { background: var(--lime); }
+.cart-recommendations { border-color: var(--line); }
+.cart-recommendations-heading strong, .cart-recommendation strong { color: var(--ink); }
+.cart-recommendations-heading span, .cart-recommendation small { color: #7b8798; }
+.cart-recommendation button { border-color: rgba(227,95,62,.35); background: rgba(227,95,62,.08); color: var(--lime-deep); }
+.drawer-scroll-top { border-color: rgba(227,95,62,.3); background: rgba(227,95,62,.08); }
+.drawer-empty { color: #687386; }
+.drawer-empty strong { color: var(--ink); }
+@media (max-width: 860px) { .product-grid, .refill-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .product-grid, .refill-grid { grid-template-columns: 1fr; }
+  .product-card, .refill-grid .product-card { min-height: 0; }
+  .cart-drawer { background: #fffdf9; }
+  .drawer-scroll { min-height: 0; }
+  .drawer-items { padding-right: 16px; padding-left: 16px; }
+}
