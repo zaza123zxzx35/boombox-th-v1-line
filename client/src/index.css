@@ -1014,3 +1014,50 @@ body { background: var(--void); }
   .line-preview-modal { width: min(100% - 24px, 520px); padding: 18px; }
   .floating-chat { min-height: 46px; padding: 12px 16px; }
 }
+
+/* Accessibility pass: clearer type scale and mobile-friendly touch targets. */
+body { font-size: 16px; line-height: 1.55; }
+button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+.desktop-nav button, .cart-trigger { font-size: 15px; font-weight: 600; }
+.primary-button, .add-button, .copy-button, .cart-recommendation button, .promo-box button { min-height: 54px; padding: 0 20px; border-radius: 12px; font-size: 15px; letter-spacing: 0; }
+.product-copy h3 { font-size: 20px; color: #fff; }
+.product-copy p, .section-intro-copy, .hero-description { font-size: 16px; line-height: 1.65; }
+.eyebrow, .meta-label, .heading-count { font-size: 11px; letter-spacing: .08em; }
+.price-line strong { font-size: 24px; color: #fff; }
+.search-wrap { min-height: 54px; }
+.search-wrap input { font-size: 16px; }
+.filter-row button { min-height: 46px; padding: 10px 16px; font-size: 14px; font-weight: 700; }
+.drawer-header h2 { font-size: 26px; }
+.drawer-header p, .drawer-item-copy small, .cart-recommendations-heading span, .cart-recommendation small { font-size: 14px; }
+.drawer-item-copy strong { font-size: 18px; color: #fff; }
+.drawer-quick-total { font-size: 16px; }
+.drawer-quick-total strong { font-size: 30px; color: #fff; }
+.free-shipping-copy { font-size: 14px; }
+.drawer-quick-hint, .drawer-summary > p { font-size: 14px; line-height: 1.55; }
+.order-guide-trigger strong { font-size: 16px; }
+.order-guide-trigger small { font-size: 13px; }
+.quantity-label { font-size: 14px; }
+.quantity-control button { width: 44px; height: 44px; font-size: 18px; }
+.quantity-control b { min-width: 32px; font-size: 18px; }
+.edit-options-button, .remove-item { min-height: 44px; font-size: 14px; }
+.promo-box input, .order-note-box textarea { font-size: 16px; }
+.order-note-box > span, .promo-box > span { font-size: 15px; font-weight: 700; }
+.line-preview-copy { font-size: 16px; line-height: 1.65; }
+.line-preview-text { font-size: 15px; line-height: 1.65; }
+@media (max-width: 640px) {
+  .desktop-nav { gap: 10px; }
+  .desktop-nav button { font-size: 14px; }
+  .cart-trigger { min-height: 52px; padding: 12px 16px; font-size: 16px; }
+  .mobile-catalog-status { min-height: 48px; font-size: 14px; }
+  .catalog-intro h2 { font-size: clamp(42px, 13vw, 62px); }
+  .section-heading h2 { font-size: 38px; }
+  .product-card { padding: 18px; }
+  .product-copy h3 { font-size: 22px; }
+  .product-copy p { font-size: 15px; }
+  .add-button { min-height: 58px; font-size: 17px; }
+  .drawer-quick-buttons button, .drawer-quick-buttons .primary-button { min-height: 58px; font-size: 16px; }
+  .drawer-scroll { font-size: 16px; }
+  .cart-recommendation button, .promo-box button { min-height: 48px; font-size: 15px; }
+  .line-preview-actions button { min-height: 58px; font-size: 16px; }
+  .floating-chat { min-height: 52px; padding: 13px 17px; font-size: 15px; }
+}
