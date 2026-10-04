@@ -5,6 +5,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
 import { createAsset, listAssetsByCategory, listProducts, updateAsset, updateProduct } from "./db";
+import { sendOrderToLine } from "./lineOrder";
 import { storagePut } from "./storage";
 
 export const appRouter = router({
@@ -89,6 +90,24 @@ export const appRouter = router({
 
   catalog: router({
     list: publicProcedure.query(() => listProducts(false)),
+  }),
+
+  orders: router({
+    submit: publicProcedure.input(z.object({
+      items: z.array(z.object({
+        name: z.string().trim().min(1).max(160),
+        count: z.number().int().min(1).max(99),
+        price: z.number().int().min(0).max(1_000_000),
+        color: z.string().trim().max(80).optional(),
+        flavors: z.string().trim().max(500).optional(),
+      })).min(1).max(50),
+      gifts: z.array(z.string().trim().min(1).max(200)).max(20).default([]),
+      subtotal: z.number().int().min(0).max(10_000_000),
+      discount: z.number().int().min(0).max(10_000_000),
+      total: z.number().int().min(0).max(10_000_000),
+      note: z.string().trim().max(240).optional(),
+      promotion: z.string().trim().max(500).optional(),
+    })).mutation(({ input }) => sendOrderToLine(input)),
   }),
 
   products: router({

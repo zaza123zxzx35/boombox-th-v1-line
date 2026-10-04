@@ -969,3 +969,39 @@ body { background: var(--void); color: var(--soft); }
   .drawer-scroll { min-height: 0; }
   .drawer-items { padding-right: 16px; padding-left: 16px; }
 }
+
+/* Mobile-first order UX refresh: lower glare, stronger contrast, larger targets. */
+:root { --void: #e8e6df; --panel: #f8f6f0; --panel-2: #dedcd5; --ink: #172235; --soft: #2d3b50; --muted: #5d6a7b; --line: rgba(23,34,53,.18); --lime: #b94932; --lime-deep: #8c3324; }
+body { background: var(--void); }
+.site-shell { background: linear-gradient(180deg, #e8e6df 0%, #deddd7 100%); }
+.site-header { background: rgba(232,230,223,.96); }
+.product-card, .cart-drawer, .drawer-scroll { background: #f8f6f0; }
+.product-card { box-shadow: 0 8px 22px rgba(23,34,53,.08); }
+.primary-button, .add-button, .copy-button, .cart-recommendation button, .promo-box button { min-height: 46px; font-weight: 800; }
+.primary-button { background: #a83f2b; box-shadow: 0 7px 16px rgba(92,40,29,.18); }
+.primary-button:hover { background: #8f3323; }
+.add-button { border-color: rgba(140,51,36,.45); background: rgba(140,51,36,.10); color: #7a2d20; }
+.add-button:hover { background: #a83f2b; color: #fff; }
+.sticky-cart-bar { background: rgba(248,246,240,.98); border-color: rgba(140,51,36,.42); }
+.drawer-quick-actions { background: #e9e3d8; }
+.drawer-summary { background: #e1dfd7; }
+.line-preview-modal, .guide-modal { background: #f8f6f0; border-color: var(--line); }
+.line-preview-text { background: #e1dfd7; color: var(--ink); }
+@media (max-width: 640px) {
+  .site-header { min-height: 64px; }
+  .header-inner { min-height: 64px; padding: 10px 14px; }
+  .cart-trigger { min-height: 46px; padding: 10px 14px; font-size: 14px; }
+  .mobile-catalog-status { min-height: 44px; font-size: 12px; }
+  .product-card { border-radius: 16px; }
+  .add-button { width: 100%; min-height: 52px; font-size: 15px; }
+  .drawer-quick-buttons { grid-template-columns: 1fr; gap: 10px; }
+  .drawer-quick-buttons button, .drawer-quick-buttons .primary-button { min-height: 54px; font-size: 15px; }
+  .drawer-item { padding: 18px 0; }
+  .quantity-control button { width: 42px; height: 42px; }
+  .remove-item, .edit-options-button { min-height: 42px; }
+  .cart-recommendation button, .promo-box button { min-width: 76px; min-height: 44px; }
+  .line-preview-actions { grid-template-columns: 1fr; gap: 10px; }
+  .line-preview-actions button { min-height: 54px; font-size: 15px; }
+  .line-preview-modal { width: min(100% - 24px, 520px); padding: 18px; }
+  .floating-chat { min-height: 46px; padding: 12px 16px; }
+}

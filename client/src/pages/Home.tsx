@@ -65,6 +65,7 @@ export default function Home() {
   const [lightboxSlide, setLightboxSlide] = useState<number | null>(null);
   const [packQuizOpen, setPackQuizOpen] = useState(false);
   const catalogQuery = trpc.catalog.list.useQuery();
+  const sendOrderMutation = trpc.orders.submit.useMutation();
 
   useEffect(() => {
     localStorage.setItem("boombox-cart", JSON.stringify(cart));
@@ -243,13 +244,31 @@ export default function Home() {
     toast.success(`${removed.name} ถูกลบออกแล้ว`, { duration: 3200, action: { label: "Undo", onClick: () => setCart((current) => [...current, removed]) } });
   }
   async function handleLineOrder() {
-    const copiedSuccessfully = await copyOrder();
-    if (!copiedSuccessfully) return;
-    toast.success("คัดลอกออเดอร์แล้ว", { description: "กำลังเปิด LINE — กดวางข้อความในแชทของร้านก่อนส่ง", duration: 5000 });
-    window.open(LINE_URL, "_blank", "noopener,noreferrer");
+    if (!cart.length || sendOrderMutation.isPending) return;
+    try {
+      const result = await sendOrderMutation.mutateAsync({
+        items: cart.map((item) => ({
+          name: item.name,
+          count: item.count,
+          price: item.price,
+          color: item.selectedColor?.name,
+          flavors: item.selectedFlavors?.length ? formatFlavorSelections(item.selectedFlavors) : undefined,
+        })),
+        gifts: giftItems.map((gift) => `${gift.name} (${gift.reason})`),
+        subtotal,
+        discount: effectiveDiscount,
+        total: cartTotal,
+        note: orderNote.trim() || undefined,
+        promotion: promoLabel || undefined,
+      });
+      await copyOrder();
+      toast.success(`ส่งออเดอร์เข้า LINE OA แล้ว · ${result.orderId}`, { description: "ร้านได้รับสรุปยอดและรายการสินค้าแล้ว", duration: 6000 });
+    } catch (error) {
+      toast.error("ส่งออเดอร์ไม่สำเร็จ", { description: error instanceof Error ? error.message : "กรุณาลองใหม่อีกครั้ง" });
+    }
   }
   function getOrderText() {
-    return `สวัสดี BoomBox TH ขอสอบถามแพ็กเกจครับ\n${cart.length ? cart.map((item) => `- ${item.name} x${item.count}${item.selectedColor ? `\n  🎨 สีแพ็กเกจ: ${item.selectedColor.name}` : ""}${item.selectedFlavors?.length ? `\n  🌈 กลิ่น: ${formatFlavorSelections(item.selectedFlavors)}` : ""}`).join("\n") : "- ขอแนะนำแพ็กเกจเริ่มต้น"}${orderNote.trim() ? `\n📝 หมายเหตุ: ${orderNote.trim()}` : ""}${promoLabel ? `\n${promoLabel}` : ""}${giftItems.length ? `\n🎁 ของแถม: ${giftItems.map((gift) => `${gift.quantity} (${gift.reason})`).join(", ")}` : ""}\nรวมสุทธิ: ฿${formatPrice(cartTotal)}`;
+    return `สวัสดี BoomBox TH ขอสอบถามแพ็กเกจครับ\n${cart.length ? cart.map((item) => `- ${item.name} x${item.count}${item.selectedColor ? `\n  🎨 สีแพ็กเกจ: ${item.selectedColor.name}` : ""}${item.selectedFlavors?.length ? `\n  🌈 กลิ่น: ${formatFlavorSelections(item.selectedFlavors)}` : ""}`).join("\n") : "- ขอแนะนำแพ็กเกจเริ่มต้น"}${giftItems.length ? `\n🎁 ของแถม: ${giftItems.map((gift) => `${gift.quantity} (${gift.reason})`).join(", ")}` : ""}${promoLabel ? `\n${promoLabel}` : ""}${orderNote.trim() ? `\n📝 หมายเหตุ: ${orderNote.trim()}` : ""}\nยอดสินค้า: ฿${formatPrice(subtotal)}${effectiveDiscount ? `\nส่วนลด: -฿${formatPrice(effectiveDiscount)}` : ""}\nรวมสุทธิ: ฿${formatPrice(cartTotal)}`;
   }
   async function copyOrder(): Promise<boolean> {
     const orderText = getOrderText();
@@ -260,7 +279,7 @@ export default function Home() {
       window.setTimeout(() => setCopied(false), 2200);
       return true;
     } catch {
-      toast.error("ยังไม่เปิด LINE", { description: "คัดลอกข้อความไม่สำเร็จ กรุณาอนุญาตการเข้าถึงคลิปบอร์ด แล้วลองอีกครั้ง" });
+      toast.error("คัดลอกสรุปยอดไม่สำเร็จ", { description: "กรุณาอนุญาตการเข้าถึงคลิปบอร์ด แล้วลองอีกครั้ง" });
       return false;
     }
   }
