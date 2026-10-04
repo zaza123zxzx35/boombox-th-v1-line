@@ -1061,3 +1061,17 @@ button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
   .line-preview-actions button { min-height: 58px; font-size: 16px; }
   .floating-chat { min-height: 52px; padding: 13px 17px; font-size: 15px; }
 }
+
+/* Cart drawer fix: keep the header/actions visible and make only the item area scroll. */
+.drawer-item-copy > span, .drawer-flavors-label, .drawer-flavor-quota, .drawer-summary > div > span, .drawer-summary > p, .order-note-box > span, .promo-box > span, .free-shipping-copy, .drawer-quick-hint { color: #bbe1fa !important; }
+.drawer-item-copy strong, .drawer-summary > div strong, .drawer-quick-total strong, .cart-recommendation strong { color: #fff !important; }
+.drawer-header h2 { color: #fff !important; }
+.drawer-header p, .drawer-item-copy small, .cart-recommendations-heading span, .cart-recommendation small, .order-note-box small { color: #bbe1fa !important; }
+.promo-box input, .order-note-box textarea { border-color: rgba(187,225,250,.34); background: #1b262c; color: #fff; }
+.promo-box input::placeholder, .order-note-box textarea::placeholder { color: #9fc6de; }
+@media (max-width: 640px) {
+  .cart-drawer { display: flex !important; flex-direction: column; height: 100dvh; max-height: 100dvh; overflow: hidden !important; }
+  .cart-drawer > .drawer-header, .cart-drawer > .drawer-quick-actions, .cart-drawer > .order-guide-trigger { flex: 0 0 auto; }
+  .cart-drawer > .drawer-scroll { flex: 1 1 auto; height: auto; min-height: 0; max-height: none; overflow-y: scroll !important; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; scrollbar-width: auto; }
+  .drawer-items { overflow: visible; }
+}
