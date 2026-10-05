@@ -289,10 +289,10 @@ export default function Home() {
             <p className="hero-description">กลิ่นที่ชัด รสที่ clean และดีไซน์ที่พกไปได้ทุกที่ — ทางเลือกใหม่ของคนที่ไม่อยากให้วันธรรมดาจืดชืด</p>
             <div className="hero-actions">
               <button className="primary-button" type="button" onClick={() => scrollToId("packages")}>ดูแพ็กเกจเริ่มต้น <ArrowDown size={16} /></button>
-              <button className="text-button" type="button" onClick={() => scrollToId("flavors")}>สำรวจ 19 กลิ่น <ArrowUpRight size={16} /></button>
+              <button className="text-button" type="button" onClick={() => scrollToId("flavors")}>สำรวจ 18 กลิ่น <ArrowUpRight size={16} /></button>
             </div>
             <div className="hero-proof">
-              <div><strong>19</strong><span>signature<br />flavors</span></div>
+              <div><strong>18</strong><span>signature<br />flavors</span></div>
               <div><strong>0%</strong><span>nicotine<br />free</span></div>
               <div><strong>4.9</strong><span><Star size={12} fill="currentColor" /> rating</span></div>
             </div>
@@ -306,7 +306,7 @@ export default function Home() {
         </section>
 
         <section className="ticker-bar" aria-label="จุดเด่นของสินค้า">
-          <div className="ticker-track"><span><Leaf size={15} /> NICOTINE-FREE</span><span><Sparkles size={15} /> 19 FLAVORS</span><span><Check size={15} /> MADE IN THAILAND</span><span><Flame size={15} /> FREE DELIVERY 999+</span><span><Leaf size={15} /> NICOTINE-FREE</span></div>
+          <div className="ticker-track"><span><Leaf size={15} /> NICOTINE-FREE</span><span><Sparkles size={15} /> 18 FLAVORS</span><span><Check size={15} /> MADE IN THAILAND</span><span><Flame size={15} /> FREE DELIVERY 999+</span><span><Leaf size={15} /> NICOTINE-FREE</span></div>
         </section>
 
         <section className="section-wrap brand-showcase" aria-label="ภาพลักษณ์ BoomBox TH carousel">
@@ -344,7 +344,7 @@ export default function Home() {
         <section className="feature-banner section-wrap">
           <img className="feature-generated-art" src="/manus-storage/refill-editorial_7f810191.jpg" alt="ภาพเม็ดรีฟิลและกล่องกลิ่นหลากสีของ BoomBox" />
           <div className="feature-copy"><p className="section-kicker">WHY BOOMBOX</p><h2>ไม่ต้องฝืนตัวเอง<br /><em>แค่เปลี่ยน signal</em></h2><p>ออกแบบมาให้เป็น ritual ใหม่ที่สัมผัสได้จริง ตั้งแต่เสียงเปิดฝา กลิ่นแรก ไปจนถึงดีไซน์ที่อยากหยิบขึ้นมาใช้ซ้ำ</p><button className="text-button light" type="button" onClick={() => scrollToId("calculator")}>คำนวณเงินที่ประหยัดได้ <ArrowUpRight size={16} /></button></div>
-          <div className="feature-stats"><div><strong>60<span>฿</span></strong><small>แทนค่าใช้จ่าย<br />ต่อซองเดิม</small></div><div><strong>119<span>฿</span></strong><small>ต่อ refill<br />100 beads</small></div><div><strong>19</strong><small>กลิ่นให้<br />ลองทุก mood</small></div></div>
+          <div className="feature-stats"><div><strong>60<span>฿</span></strong><small>แทนค่าใช้จ่าย<br />ต่อซองเดิม</small></div><div><strong>119<span>฿</span></strong><small>ต่อ refill<br />100 beads</small></div><div><strong>18</strong><small>กลิ่นให้<br />ลองทุก mood</small></div></div>
         </section>
 
         <div id="flavors"><FlavorBoard /></div>
